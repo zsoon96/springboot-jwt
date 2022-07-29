@@ -1,15 +1,17 @@
 package com.example.jwttutorial.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Set;
 
 @Entity
 @Table(name="user") // 테이블 이름 별도 설정
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor // 파라미터가 없는 기본 생성자 생성
 @AllArgsConstructor // 모든 필드 값을 파라미터로 받는 생성자 생성
@@ -47,5 +49,6 @@ public class User {
     )
     private Set<Authority> authorities;
 
-
+    public User(String subject, String s, Collection<? extends GrantedAuthority> authorities) {
+    }
 }
