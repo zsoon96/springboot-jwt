@@ -27,7 +27,7 @@ public class UserService {
     @Transactional
     public User signup (UserReqDto userReqDto) {
         // 기존 정보가 있는지 검증
-        if ( userRepository.findOneWithAuthoritiesByUsername(userReqDto.getUsername()).orElseThrow(null) != null) {
+        if ( userRepository.findOneWithAuthoritiesByUsername(userReqDto.getUsername()).orElse(null) != null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
         }
 
@@ -39,7 +39,7 @@ public class UserService {
         // 권한 정보를 이용하여 유저 정보 만들어서
         User user = User.builder()
                 .username(userReqDto.getUsername())
-                .password(userReqDto.getPassword())
+                .password(passwordEncoder.encode(userReqDto.getPassword()))
                 .nickname(userReqDto.getNickname())
                 .authorities(Collections.singleton(authority))
                 .activated(true)
@@ -55,7 +55,7 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesByUsername(username);
     }
 
-    // 유저/권한 정보 가져오는 메소드 2 - SecurityContext에 저장된 username 정보만 조회
+    // 유저/권한 정보 가져오는 메소드 2 - SecurityContext에정저장된 username 정보만 조회
     @Transactional(readOnly = true)
     public Optional<User> getMyUserWithAuthorities() {
         return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);
