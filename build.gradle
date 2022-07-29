@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.7.2'
+    id 'org.springframework.boot' version '2.4.1' // 포스트맨 응답값 에러로 버전 다운그레이드
     id 'io.spring.dependency-management' version '1.0.12.RELEASE'
     id 'java'
 }
