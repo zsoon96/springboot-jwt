@@ -19,7 +19,7 @@ public class JwtFilter extends GenericFilterBean {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtFilter.class);
 
-    public static final  String AUTHORITIES_HEADER = "Authorization";
+    public static final  String AUTHORIZATION_HEADER = "Authorization";
 
     private TokenProvider tokenProvider;
 
@@ -47,7 +47,7 @@ public class JwtFilter extends GenericFilterBean {
 
     // Request Header에서 토큰 정보를 꺼내오기 위한 메소드
     private  String resolveToken(HttpServletRequest request) {
-        String bearerToken= request.getHeader(AUTHORITIES_HEADER);
+        String bearerToken= request.getHeader(AUTHORIZATION_HEADER);
         if ( StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }

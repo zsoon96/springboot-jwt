@@ -12,7 +12,7 @@ import java.util.Optional;
 public class SecurityUtil {
     private static final Logger logger = LoggerFactory.getLogger(SecurityUtil.class);
 
-    public SecurityUtil() {
+    private SecurityUtil() {
     }
 
     // SecurityContext에서 Authentication 객체를 이용해 username을 리턴

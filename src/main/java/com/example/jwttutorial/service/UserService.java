@@ -25,7 +25,7 @@ public class UserService {
 
     // 회원가입 로직
     @Transactional
-    public User signup (UserReqDto userReqDto) {
+    public UserReqDto signup (UserReqDto userReqDto) {
         // 기존 정보가 있는지 검증
         if ( userRepository.findOneWithAuthoritiesByUsername(userReqDto.getUsername()).orElse(null) != null) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다.");
@@ -45,19 +45,19 @@ public class UserService {
                 .activated(true)
                 .build();
 
-        // db에 저
-        return userRepository.save(user);
+        // db에 저장
+        return UserReqDto.from(userRepository.save(user));
     }
 
     // 유저/권한 정보 가져오는 메소드 1 - username 기준으로 정보 조회
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthorities(String username) {
-        return userRepository.findOneWithAuthoritiesByUsername(username);
+    public UserReqDto getUserWithAuthorities(String username) {
+        return UserReqDto.from(userRepository.findOneWithAuthoritiesByUsername(username).orElse(null));
     }
 
-    // 유저/권한 정보 가져오는 메소드 2 - SecurityContext에정저장된 username 정보만 조회
+    // 유저/권한 정보 가져오는 메소드 2 - SecurityContext에 저장된 username 정보만 조회
     @Transactional(readOnly = true)
-    public Optional<User> getMyUserWithAuthorities() {
-        return SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername);
+    public UserReqDto getMyUserWithAuthorities() {
+        return UserReqDto.from(SecurityUtil.getCurrentUsername().flatMap(userRepository::findOneWithAuthoritiesByUsername).orElse(null));
     }
 }

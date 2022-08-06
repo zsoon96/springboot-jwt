@@ -47,7 +47,7 @@ public class AuthController {
 
         // 토큰 헤더에 담아주기
         HttpHeaders headers = new HttpHeaders();
-        headers.add(JwtFilter.AUTHORITIES_HEADER, "Bearer " + jwt);
+        headers.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
         // 토큰 바디에 담아주기
         return new ResponseEntity<>(new TokenResDto(jwt), headers, HttpStatus.OK);

@@ -42,7 +42,7 @@ public class TokenProvider implements InitializingBean {
 
     // 빈이 생성이 되고, 의존성 주입을 받은 후에 secret 값을 base64로 디코딩해서 key 변수에 할당하기 위함
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
